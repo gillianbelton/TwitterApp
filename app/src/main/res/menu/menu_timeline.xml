@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.codepath.apps.simpleTweets.TimelineActivity">
+
+    <item
+        android:id="@+id/miProfile"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_profile"
+        android:onClick="onProfileView"
+        android:orderInCategory="200"
+        android:title="Profile">
+
+    </item>
+
+    <item
+        android:id="@+id/miTwitterIcon"
+        app:showAsAction="always"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_twitter_icon"
+        android:title="TwitterIcon">
+
+    </item>
+
+    <item
+        android:id="@+id/miNewTweet"
+        app:showAsAction="always"
+        android:orderInCategory="300"
+        android:layout_alignParentLeft="true"
+        android:icon="@drawable/ic_compose"
+        android:onClick="onClickComposeTweet"
+        android:title="Compose">
+
+    </item>
+
+
+
+</menu>

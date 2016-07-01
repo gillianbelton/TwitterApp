@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivProfileImage"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:layout_alignParentStart="true"
+        android:onClick="goToProfile"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Im so cool. This is a pretend tweet"
+        android:id="@+id/tvBody"
+        android:padding="5dp"
+        android:autoLink="all"
+        android:layout_below="@+id/tvUsername"
+        android:layout_alignLeft="@+id/tvUsername"
+        android:layout_alignStart="@+id/tvUsername" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/tvTimeStamp"
+        android:layout_margin="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gillian"
+        android:id="@+id/tvUsername"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:layout_toRightOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:gravity="center_vertical" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gillian_Belton"
+        android:id="@+id/tvScreenName"
+        android:padding="5dp"
+        android:layout_alignBottom="@+id/tvUsername"
+        android:layout_toRightOf="@+id/tvUsername"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_above="@+id/tvBody"
+        android:textSize="12sp"
+        android:gravity="center_vertical" />
+
+    <Button
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/reply_btn"
+        android:id="@+id/button"
+        android:layout_below="@+id/tvBody"
+        android:padding="5dp"
+        android:layout_alignLeft="@+id/tvBody" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/btnRetweet"
+        android:background="@drawable/retweet_btn"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toRightOf="@+id/button"
+        android:layout_marginLeft="15dp"
+        android:onClick="retweet"
+         />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/heart_false_btn"
+        android:id="@+id/btnFav"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toRightOf="@+id/btnRetweet"
+        android:layout_marginLeft="15dp"
+        />
+
+
+</RelativeLayout>
