@@ -1,5 +1,6 @@
 package com.codepath.apps.simpleTweets;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +25,9 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
+
+    //public boolean isMe;
+
 public class ProfileActivity extends AppCompatActivity {
     TwitterClient client;
     User user;
@@ -31,11 +35,13 @@ public class ProfileActivity extends AppCompatActivity {
     String screenname;
     String defaultUrl;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        defaultUrl = "http://artsaspen.aspenchamber.org/sites/default/files/images/Beach.stockimage.jpg";
+        defaultUrl = "https://s.graphiq.com/sites/default/files/2307/media/images/t2/Twitter_Blue_1409382.png";
+
 
         client = TwitterApplication.getRestClient();
         user = (User) getIntent().getSerializableExtra("user");
@@ -79,23 +85,25 @@ public class ProfileActivity extends AppCompatActivity {
         TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
         TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
         TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
-
+        //TextView tvScreenName = (TextView) findViewById(R.id.tvScreenName);
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
         ImageView ivCoverImage = (ImageView) findViewById(R.id.ivCoverPic);
 
         tvName.setText(user.getName());
+        //tvScreenName.setText("@"+user.getScreenname());
+
         tvTagline.setText(user.getTagline());
         tvFollowers.setText(user.getFollowersCount() + " Followers");
         tvFollowing.setText(user.getFollowingCount() + " Following");
 
-        if (user.getCoverPhotoUrl() != null) {
+        if (user.getCoverPhotoUrl() != null && !user.getCoverPhotoUrl().isEmpty()) {
             Picasso.with(this).load(user.getCoverPhotoUrl()).into(ivCoverImage);
         }
         else{
-            Picasso.with(this).load(defaultUrl).into(ivCoverImage);
+            //Picasso.with(this).load(defaultUrl).into(ivCoverImage);
+            ivCoverImage.setBackgroundColor(Color.rgb(41,156,231));
         }
         Picasso.with(this).load(user.getProfileImageUrl()).transform(new RoundedCornersTransformation(3, 3)).into(ivProfileImage);
-
 
     }
 
@@ -106,12 +114,19 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public class TweetsPagerAdapter extends SmartFragmentStatePagerAdapter{
-        final int PAGE_COUNT = 2;
+        final int PAGE_COUNT = 3;
+
+        //MAKE THIS SPECIFIC FOR YOURSELF OR NOT:
+        //if(isMe){
+        //    String i;
+        //}
+
         private String tabTitles[] = {"Tweets","Likes","Mentions"};
 
         public TweetsPagerAdapter(FragmentManager fm){
             super(fm);
         }
+
 
         @Override
         public Fragment getItem(int position) {
@@ -165,6 +180,7 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     if (user == null) {
                         user = User.fromJSON(response);
+                        //isMe = true;
                         screenname = user.getScreenname();
                         Log.d("DEBUG", "USER WAS NULL");
                     } else {

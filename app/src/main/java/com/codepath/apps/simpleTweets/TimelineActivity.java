@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.simpleTweets.fragments.HomeTimelineFragment;
 import com.codepath.apps.simpleTweets.fragments.MentionsTimelineFragment;
 import com.codepath.apps.simpleTweets.fragments.TweetsListFragment;
@@ -39,9 +38,14 @@ public class TimelineActivity extends AppCompatActivity {
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         adapterViewPager = new TweetsPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
-        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabStrip.setViewPager(vpPager);
+        //PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        //tabStrip.setViewPager(vpPager);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_twitter_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         client = TwitterApplication.getRestClient();
 
         client.getMyInfo(new JsonHttpResponseHandler() {

@@ -65,7 +65,6 @@ public class TwitterClient extends OAuthBaseClient {
 
 		//specify params
 		RequestParams params = new RequestParams();
-
 		params.put("count", 25);
 		//Execute request:
 

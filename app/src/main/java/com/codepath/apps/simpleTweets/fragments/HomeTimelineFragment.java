@@ -33,6 +33,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d("DEBUG", response.toString());
+
                 ArrayList<Tweet> tweets = Tweet.fromJSONArray(response);
                 clear();
                 addAll(tweets);

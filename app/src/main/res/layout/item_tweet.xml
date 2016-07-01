@@ -11,8 +11,7 @@
         android:layout_margin="5dp"
         android:padding="5dp"
         android:layout_alignParentStart="true"
-        android:onClick="goToProfile"
-        />
+        android:onClick="goToProfile" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -68,7 +67,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/reply_btn"
-        android:id="@+id/button"
+        android:id="@+id/btnReply"
         android:layout_below="@+id/tvBody"
         android:padding="5dp"
         android:layout_alignLeft="@+id/tvBody" />
@@ -79,8 +78,8 @@
         android:layout_height="20dp"
         android:id="@+id/btnRetweet"
         android:background="@drawable/retweet_btn"
-        android:layout_alignBottom="@+id/button"
-        android:layout_toRightOf="@+id/button"
+        android:layout_alignBottom="@+id/btnReply"
+        android:layout_toRightOf="@+id/btnReply"
         android:layout_marginLeft="15dp"
         android:onClick="retweet"
          />
@@ -91,9 +90,9 @@
         android:layout_height="20dp"
         android:background="@drawable/heart_false_btn"
         android:id="@+id/btnFav"
-        android:layout_alignBottom="@+id/button"
-        android:layout_toRightOf="@+id/btnRetweet"
-        android:layout_marginLeft="15dp"
+        android:layout_alignBottom="@+id/btnReply"
+        android:layout_toRightOf="@+id/btnReply"
+        android:layout_marginLeft="65dp"
         />
 
 

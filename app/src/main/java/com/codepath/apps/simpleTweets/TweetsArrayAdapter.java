@@ -32,6 +32,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
     TwitterClient client = TwitterApplication.getRestClient();
 
 
+
     public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
         super(context, R.layout.item_tweet, tweets);
     }
@@ -41,16 +42,17 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
 
 
 
-         final Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
+        //User user = tweet.getUser();
 
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet,parent,false);
         }
-
+        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
         ImageView ivProfile = (ImageView) convertView.findViewById(R.id.ivProfileImage);
         TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUsername);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
-        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
+
         TextView tvTimeStamp = (TextView) convertView.findViewById(R.id.tvTimeStamp);
         tvBody.setText(tweet.getBody());
         final Button btnRetweet = (Button) convertView.findViewById(R.id.btnRetweet);
@@ -59,8 +61,9 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         //set font
         Typeface helv = Typeface.createFromAsset(getContext().getAssets(), "fonts/HelveticaNeue-Regular.ttf");
         Typeface helv_bold = Typeface.createFromAsset(getContext().getAssets(), "fonts/helvetica-neue-bold.ttf");
-        tvBody.setTypeface(helv);
         tvScreenName.setTypeface(helv);
+        tvBody.setTypeface(helv);
+
         tvTimeStamp.setTypeface(helv);
         tvUserName.setTypeface(helv_bold);
 
@@ -69,7 +72,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         tvTimeStamp.setText(TimeFormatter.getTimeDifference(tweet.getCreatedAt()));
 
         //assign text and images
-        tvScreenName.setText("@"+tweet.getUser().getScreenname());
+        tvScreenName.setText(tweet.getUser().getScreenname());
         tvUserName.setText(tweet.getUser().getName());
         ivProfile.setImageResource(android.R.color.transparent); //clear the old image for a recycle view
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).transform(new RoundedCornersTransformation(3, 3)).into(ivProfile);
@@ -94,6 +97,17 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         else{
             btnFav.setBackgroundResource(R.drawable.heart_false_btn);
         }
+
+        Button btnReply = (Button) convertView.findViewById(R.id.btnReply);
+
+        btnReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                launchComposeView(tweet);
+            }
+        });
+
+
 
         btnRetweet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +205,12 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
     public void launchProfileView(Tweet tweet){
         Intent i = new Intent(getContext(),ProfileActivity.class);
         i.putExtra("user", tweet.getUser());
+        i.putExtra("screen_name",tweet.getUser().getScreenname());
+        getContext().startActivity(i);
+    }
+
+    public void launchComposeView(Tweet tweet){
+        Intent i = new Intent(getContext(),ComposeActivity.class);
         i.putExtra("screen_name",tweet.getUser().getScreenname());
         getContext().startActivity(i);
     }

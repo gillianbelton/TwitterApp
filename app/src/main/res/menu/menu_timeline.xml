@@ -14,14 +14,6 @@
 
     </item>
 
-    <item
-        android:id="@+id/miTwitterIcon"
-        app:showAsAction="always"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_twitter_icon"
-        android:title="TwitterIcon">
-
-    </item>
 
     <item
         android:id="@+id/miNewTweet"

@@ -3,15 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileActivity"
+    >
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:scaleType="centerCrop"
         android:id="@+id/ivCoverPic"
-        android:src="@drawable/ic_launcher"
         android:layout_alignParentTop="true"
         />
 
@@ -38,19 +39,22 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        android:id="@+id/rlUserHeader"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/rlUserHeader"
-        android:layout_alignTop="@+id/ivCoverPic">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
 
     <ImageView
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:id="@+id/ivProfileImage"
-        android:layout_marginTop="95dp"
+        android:layout_marginTop="75dp"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
         />
 
     <TextView
@@ -58,6 +62,7 @@
         android:layout_height="wrap_content"
         android:text="Name"
         android:id="@+id/tvName"
+        android:paddingLeft="10dp"
         android:textSize="16sp"
         android:layout_below="@+id/ivProfileImage" />
 
@@ -66,6 +71,7 @@
         android:layout_height="wrap_content"
         android:text="&quot;Im so cool&quot;"
         android:id="@+id/tvTagline"
+        android:paddingLeft="10dp"
         android:layout_alignLeft="@id/tvName"
         android:layout_below="@id/tvName"
         android:textSize="12dp" />
@@ -84,12 +90,14 @@
                 android:id="@+id/tvFollowers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
                 android:text="5 Followers"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:paddingLeft="10dp"
                 android:id="@+id/tvFollowing"
                 android:text="5 following"/>
 

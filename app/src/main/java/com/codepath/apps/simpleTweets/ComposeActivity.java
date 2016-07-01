@@ -26,22 +26,44 @@ public class ComposeActivity extends AppCompatActivity {
     User user;
     TextView tvCharCount;
     EditText etTweet;
+    ImageView ivProfilePic;
+    String screenname;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+        client = TwitterApplication.getRestClient();
         user = (User) getIntent().getSerializableExtra("user");
+        screenname = getIntent().getStringExtra("screen_name");
 
-        etTweet = (EditText) findViewById(R.id.etTweet);
-        tvCharCount = (TextView) findViewById(R.id.tvCharLimit);
 
-        etTweet.addTextChangedListener(mTextEditorWatcher);
+        client = TwitterApplication.getRestClient();
+
+        client.getMyInfo(new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                user = User.fromJSON(response);
+                etTweet = (EditText) findViewById(R.id.etTweet);
+
+
+                if (screenname != null){
+                    etTweet.setText("@"+screenname + " ");
+                    etTweet.setSelection(etTweet.length());
+                }
+                tvCharCount = (TextView) findViewById(R.id.tvCharLimit);
+                ivProfilePic = (ImageView) findViewById(R.id.ivProfilePic);
+                Picasso.with(getApplicationContext()).load(user.getProfileImageUrl()).transform(new RoundedCornersTransformation(3, 3)).into(ivProfilePic);
+                etTweet.addTextChangedListener(mTextEditorWatcher);
+
+                //etTweet.addTextChangedListener(mTextEditorWatcher);
+            }
+        });
+
+
 
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ImageView ivProfilePic = (ImageView) findViewById(R.id.ivProfilePic);
-        Picasso.with(this).load(user.getProfileImageUrl()).transform(new RoundedCornersTransformation(3, 3)).into(ivProfilePic);
 
     }
 
@@ -69,7 +91,6 @@ public class ComposeActivity extends AppCompatActivity {
 
     public void composeTweet(View view) {
         //Log.d("DEBUG", "DID THIS WORK COMPOSE!?");
-        client = TwitterApplication.getRestClient();
         EditText etTweet = (EditText) findViewById(R.id.etTweet);
         String tweet = etTweet.getText().toString();
         client.composeTweet(tweet, new JsonHttpResponseHandler(){
