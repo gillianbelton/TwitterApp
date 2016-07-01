@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.simpleTweets.fragments.LikesTimelineFragment;
+import com.codepath.apps.simpleTweets.fragments.MentionsTimelineFragment;
 import com.codepath.apps.simpleTweets.fragments.UserTimelineFragment;
 import com.codepath.apps.simpleTweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -21,17 +22,20 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
     TwitterClient client;
     User user;
     SmartFragmentStatePagerAdapter adapterViewPager;
     String screenname;
+    String defaultUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        defaultUrl = "http://artsaspen.aspenchamber.org/sites/default/files/images/Beach.stockimage.jpg";
 
         client = TwitterApplication.getRestClient();
         user = (User) getIntent().getSerializableExtra("user");
@@ -77,11 +81,20 @@ public class ProfileActivity extends AppCompatActivity {
         TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
 
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        ImageView ivCoverImage = (ImageView) findViewById(R.id.ivCoverPic);
+
         tvName.setText(user.getName());
         tvTagline.setText(user.getTagline());
         tvFollowers.setText(user.getFollowersCount() + " Followers");
         tvFollowing.setText(user.getFollowingCount() + " Following");
-        Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
+
+        if (user.getCoverPhotoUrl() != null) {
+            Picasso.with(this).load(user.getCoverPhotoUrl()).into(ivCoverImage);
+        }
+        else{
+            Picasso.with(this).load(defaultUrl).into(ivCoverImage);
+        }
+        Picasso.with(this).load(user.getProfileImageUrl()).transform(new RoundedCornersTransformation(3, 3)).into(ivProfileImage);
 
 
     }
@@ -94,7 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public class TweetsPagerAdapter extends SmartFragmentStatePagerAdapter{
         final int PAGE_COUNT = 2;
-        private String tabTitles[] = {"Tweets","Likes"};
+        private String tabTitles[] = {"Tweets","Likes","Mentions"};
 
         public TweetsPagerAdapter(FragmentManager fm){
             super(fm);
@@ -107,6 +120,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
             else if (position == 1){
                 return LikesTimelineFragment.newInstance(screenname);
+            }
+            else if (position == 2){
+                return new MentionsTimelineFragment();
             }
             else {
                 //String hello;

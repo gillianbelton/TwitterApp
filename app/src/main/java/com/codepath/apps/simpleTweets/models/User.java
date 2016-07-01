@@ -37,6 +37,10 @@ public class User implements Serializable {
         return screenname;
     }
 
+    public String getCoverPhotoUrl() {
+        return coverPhotoUrl;
+    }
+
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
@@ -46,6 +50,7 @@ public class User implements Serializable {
     private String tagLine;
     private int followersCount;
     private int followingCount;
+    private String coverPhotoUrl;
 
 
     public static User fromJSON(JSONObject jsonObject){
@@ -55,6 +60,7 @@ public class User implements Serializable {
             u.name = jsonObject.getString("name");
             u.profileImageUrl = jsonObject.getString("profile_image_url");
             u.uid = jsonObject.getLong("id");
+            u.coverPhotoUrl =jsonObject.getString("profile_banner_url");
             u.screenname = jsonObject.getString("screen_name");
             u.tagLine = jsonObject.getString("description");
             u.followersCount = jsonObject.getInt("followers_count");

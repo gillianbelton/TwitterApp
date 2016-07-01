@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     tools:context="com.codepath.apps.simpleTweets.TimelineActivity">
 
+
     <com.astuetz.PagerSlidingTabStrip
-    android:id="@+id/tabs"
-    app:pstsShouldExpand="true"
-    app:pstsTextAllCaps="true"
-    android:layout_width="match_parent"
-    android:layout_height="48dp" />
+        android:id="@+id/tabs"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="true"
+        android:background="#FFFF"
+        android:textColor="#55acee"
+        app:pstsIndicatorColor="#55acee"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
