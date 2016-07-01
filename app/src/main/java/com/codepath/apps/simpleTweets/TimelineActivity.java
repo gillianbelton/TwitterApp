@@ -44,7 +44,7 @@ public class TimelineActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         client = TwitterApplication.getRestClient();
 
-        client.getUserInfo(new JsonHttpResponseHandler() {
+        client.getMyInfo(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);

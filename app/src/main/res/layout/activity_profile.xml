@@ -11,6 +11,22 @@
     tools:context=".ProfileActivity">
 
 
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs2"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="true"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/llCounts"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_below="@+id/tabs2" />
+
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -73,12 +89,12 @@
 
 
 
-    <FrameLayout
+    <!--<FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/llCounts"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/flContainer"></FrameLayout>
+        android:id="@+id/flContainer"></FrameLayout>-->
 
 </RelativeLayout>

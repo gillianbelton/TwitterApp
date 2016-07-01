@@ -3,7 +3,7 @@ package com.codepath.apps.simpleTweets;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -11,7 +11,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.codepath.apps.simpleTweets.fragments.MentionsTimelineFragment;
+import com.astuetz.PagerSlidingTabStrip;
+import com.codepath.apps.simpleTweets.fragments.LikesTimelineFragment;
 import com.codepath.apps.simpleTweets.fragments.UserTimelineFragment;
 import com.codepath.apps.simpleTweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -24,43 +25,38 @@ import cz.msebera.android.httpclient.Header;
 public class ProfileActivity extends AppCompatActivity {
     TwitterClient client;
     User user;
+    SmartFragmentStatePagerAdapter adapterViewPager;
+    String screenname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
         client = TwitterApplication.getRestClient();
         user = (User) getIntent().getSerializableExtra("user");
+
+
         //get the screenname from activity that launches this
-        client.getUserInfo(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                if (user == null) {
-                    user = User.fromJSON(response);
-                    Log.d("DEBUG", "USER WAS NULL");
-                } else {
-                    Log.d("DEBUG", user.toString());
-                }
-                populateProfileHeader(user);
 
-            }
+        screenname = getIntent().getStringExtra("screen_name");
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG","went to on failure");
-                Log.d("DEBUG",errorResponse.toString());
-            }
-        });
+        loadUserInfo(screenname);
 
-        String screenName = getIntent().getStringExtra("screen_name");
+        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager2);
+        adapterViewPager = new TweetsPagerAdapter(getSupportFragmentManager());
+        vpPager.setAdapter(adapterViewPager);
+        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs2);
+        tabStrip.setViewPager(vpPager);
+    /*
         if (savedInstanceState == null){
             //create user timeline fragment
-            UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
+            LikesTimelineFragment likesFragment = LikesTimelineFragment.newInstance(screenname);
             //display user fragment within this activity (dynamic)
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.flContainer, fragmentUserTimeline);
+            ft.replace(R.id.flContainer, likesFragment);
             ft.commit();
-        }
+        }*/
     }
 
     @Override
@@ -107,12 +103,13 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position ==0){
-                return new UserTimelineFragment();
+                return UserTimelineFragment.newInstance(screenname);
             }
             else if (position == 1){
-                return new MentionsTimelineFragment();
+                return LikesTimelineFragment.newInstance(screenname);
             }
             else {
+                //String hello;
                 return null;
             }
         }
@@ -128,5 +125,46 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    public void loadUserInfo(final String screenname2){
+
+        if(screenname2 != null && !screenname2.isEmpty()){
+            client.getUserInfo(screenname2, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    user = User.fromJSON(response);
+                    populateProfileHeader(user);
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.d("DEBUG","went to on failure");
+                    Log.d("DEBUG",errorResponse.toString());
+                }
+                });
+        }
+        else{
+            client.getMyInfo(new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    if (user == null) {
+                        user = User.fromJSON(response);
+                        screenname = user.getScreenname();
+                        Log.d("DEBUG", "USER WAS NULL");
+                    } else {
+                        Log.d("DEBUG", user.toString());
+                    }
+                    populateProfileHeader(user);
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    Log.d("DEBUG","went to on failure");
+                    Log.d("DEBUG",errorResponse.toString());
+                }
+            });
+        }
+    }
 
 }
