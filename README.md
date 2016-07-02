@@ -55,11 +55,17 @@ Here's a walkthrough of implemented user stories:
 
 <img src='http://i.imgur.com/zJ9OaTZ.gif' title='Compose and Profile Views' width='' alt='Video Walkthrough' />
 
+<img src='http://i.imgur.com/XM38ljc.gif' title='Hometimeline Views' width='' alt='Video Walkthrough' />
+
+
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
 Describe any challenges encountered while building the app.
+-layout with regards to all the different views was challenging, making sure the correct things where on top/bottom/right/left etc
+-correctly making the API post/get calls
+
 
 ## Open-source libraries used
 
