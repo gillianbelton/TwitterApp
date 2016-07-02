@@ -200,6 +200,8 @@ public class Tweet implements Serializable {
     private User user;
     public boolean isRT;
     public boolean isFav;
+    //String media;
+
 
     public boolean isRT() {
         return isRT;
@@ -221,7 +223,8 @@ public class Tweet implements Serializable {
             tweet.uid = jsonObject.getLong("id");
             tweet.isFav = jsonObject.getBoolean("favorited");
             tweet.isRT = jsonObject.getBoolean("retweeted");
-            //tweet.tweetId =
+            //JSONArray media = jsonObject.getJSONObject("entities").getJSONArray("media");
+            //tweet.media = media.getJSONObject(0).getString("media_url");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
             tweet.createdAt = jsonObject.getString("created_at");
         } catch (JSONException e) {

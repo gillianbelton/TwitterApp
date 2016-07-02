@@ -52,6 +52,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         ImageView ivProfile = (ImageView) convertView.findViewById(R.id.ivProfileImage);
         TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUsername);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
+        //ImageView ivMedia = (ImageView) convertView.findViewById(R.id.ivMedia);
 
         TextView tvTimeStamp = (TextView) convertView.findViewById(R.id.tvTimeStamp);
         tvBody.setText(tweet.getBody());
@@ -68,6 +69,14 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         tvUserName.setTypeface(helv_bold);
 
 
+       /* if(tweet.getMediaUrl() != null){
+            ivMedia.setVisibility(View.VISIBLE);
+            Picasso.with(getContext()).load(tweet.getMediaUrl()).transform(new RoundedCornersTransformation(2, 2)).into(ivMedia);
+        }
+        else {
+            ivMedia.setVisibility(View.GONE);
+        }*/
+
         //time stamp
         tvTimeStamp.setText(TimeFormatter.getTimeDifference(tweet.getCreatedAt()));
 
@@ -76,6 +85,9 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         tvUserName.setText(tweet.getUser().getName());
         ivProfile.setImageResource(android.R.color.transparent); //clear the old image for a recycle view
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).transform(new RoundedCornersTransformation(3, 3)).into(ivProfile);
+
+
+
 
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
